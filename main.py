@@ -1,8 +1,11 @@
 import streamlit as st
+import pandas as pd
+
+st.Page("main.py",title="Arturo Cruz")
 
 st.set_page_config(layout="wide")
 
-col1,col2, = st.columns(2)
+col1,col2= st.columns(2)
 
 with col1:
     st.image("images/ProfilePhoto.jpg")
@@ -17,3 +20,31 @@ with col2:
      3 years."""
 
     st.info(content)
+
+content2 = """Below you can find my projects. Feel free to contact me"""
+st.write(content2)
+
+
+
+col3, empty_col,col4 = st.columns(3)
+
+col3, empty_col, col4 = st.columns([1.5,0.5,1.5])
+
+df = pd.read_csv("data.csv",sep=";")
+
+with col3:
+    for index, row in df[:10].iterrows():
+        st.header(row["title"])
+        img = f"images/{row["image"]}"
+        st.image(img)
+        description = row["description"]
+        st.write(description)
+        st.write(f"[Source Code]({row["url"]})")
+
+with col4:
+    for index, row in df[10:].iterrows():
+        st.header(row["title"])
+        img = f"images/{row["image"]}"
+        st.image(img)
+        st.write(description)
+        st.write(f"[Source Code]({row["url"]})")
